@@ -4,6 +4,8 @@
 
 FaceTrail is a cross-platform CLI for face extraction, clustering, visual reports, and privacy-safe media exports. It turns a folder of images or videos into a practical review workspace, and it was rebuilt from the original `PythonFaceTracker` idea into something cleaner, easier to install, and actually ready to share.
 
+![FaceTrail preview](assets/preview.svg)
+
 ## Why this is useful
 
 - Review who appears across a media folder without manually scrubbing files.
@@ -96,6 +98,89 @@ Recommended defaults:
 - Haar cascades are fast and portable, but they are not state-of-the-art detectors.
 - Performance depends on lighting, face angle, and source quality.
 
-## Spanish README
+---
 
-The Spanish version is available in [README.es.md](README.es.md).
+# FaceTrail en Espanol
+
+![FaceTrail banner](assets/banner.svg)
+
+FaceTrail es una CLI multiplataforma para extraer rostros, agrupar apariciones similares, generar reportes visuales y exportar copias anonimizadas. Convierte una carpeta de imagenes o videos en un espacio de trabajo realmente util, y nace de la idea original de `PythonFaceTracker` pero rehecha para quedar mas limpia, portable y compartible.
+
+![Vista de FaceTrail](assets/preview.svg)
+
+## Que hace
+
+- Escanea imagenes individuales, carpetas completas o videos.
+- Detecta rostros con OpenCV sin pedir rutas manuales de cascadas.
+- Extrae recortes automaticamente y agrupa apariciones parecidas.
+- Calcula la mejor captura de cada grupo segun nitidez.
+- Genera un reporte HTML, un `summary.json` y un `detections.csv`.
+- Puede exportar copias anonimizadas con desenfoque facial.
+
+## Instalacion
+
+Linux:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
+
+Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -e .
+```
+
+## Paquetes de Release
+
+Este repositorio incluye un empaquetador que genera siempre:
+
+- `dist/facetrail-windows-vX.Y.Z.zip`
+- `dist/facetrail-linux-vX.Y.Z.tar.gz`
+
+Se genera con:
+
+```bash
+python scripts/build_release.py
+```
+
+## Uso rapido
+
+```bash
+facetrail scan ./media --output ./output --save-redacted
+```
+
+Ajuste recomendado:
+
+```bash
+facetrail scan ./media --output ./output --sample-every 10 --min-face-size 96 --cluster-threshold 0.95 --save-redacted
+```
+
+## Estructura de salida
+
+- `output/faces/`: recortes de rostros detectados.
+- `output/redacted/`: copias opcionales con rostros difuminados.
+- `output/report/gallery.html`: galeria visual.
+- `output/report/summary.json`: resumen legible por maquinas.
+- `output/report/detections.csv`: manifiesto facil de abrir en Excel o similares.
+
+## Casos de uso
+
+- Revisar rapidamente quien aparece en una carpeta audiovisual.
+- Preparar material antes de compartirlo con privacidad basica.
+- Curar lotes de fotos o videos para creadores, investigadores o prensa.
+- Hacer una primera pasada ligera antes de un pipeline de vision mas complejo.
+
+## Limitaciones
+
+- El agrupamiento es ligero y basado en apariencia. No pretende ser biometria.
+- Haar cascades prioriza portabilidad y facilidad, no el estado del arte.
+- El rendimiento depende de iluminacion, angulo facial y calidad del material.
+
+## Archivo adicional
+
+La version separada en espanol se mantiene en [README.es.md](README.es.md).

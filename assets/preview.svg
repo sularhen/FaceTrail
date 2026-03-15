@@ -1,0 +1,39 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" fill="#F4EBDC"/>
+  <rect x="44" y="44" width="1192" height="632" rx="32" fill="#FFF9F0" stroke="#1B1B1B" stroke-width="8"/>
+  <rect x="84" y="84" width="1112" height="72" rx="20" fill="#132A30"/>
+  <circle cx="126" cy="120" r="12" fill="#D45745"/>
+  <circle cx="162" cy="120" r="12" fill="#D7A144"/>
+  <circle cx="198" cy="120" r="12" fill="#48A067"/>
+  <text x="236" y="130" fill="#F6EFE5" font-family="Segoe UI, sans-serif" font-size="30" font-weight="700">FaceTrail Report Preview</text>
+  <rect x="84" y="184" width="336" height="444" rx="24" fill="#132A30"/>
+  <circle cx="252" cy="316" r="92" fill="#F8F2E8" stroke="#111111" stroke-width="14"/>
+  <circle cx="218" cy="304" r="20" fill="#111111"/>
+  <circle cx="286" cy="304" r="20" fill="#111111"/>
+  <path d="M252 328L233 359H271L252 328Z" fill="#111111"/>
+  <rect x="201" y="392" width="102" height="62" rx="16" fill="#F8F2E8" stroke="#111111" stroke-width="14"/>
+  <path d="M226 392V454" stroke="#111111" stroke-width="10"/>
+  <path d="M252 392V454" stroke="#111111" stroke-width="10"/>
+  <path d="M278 392V454" stroke="#111111" stroke-width="10"/>
+  <text x="126" y="540" fill="#F8F2E8" font-family="Segoe UI, sans-serif" font-size="38" font-weight="800">Cluster 01</text>
+  <text x="126" y="584" fill="#D7D1C8" font-family="Segoe UI, sans-serif" font-size="24" font-weight="500">Best crop, confidence, and source trace</text>
+  <rect x="460" y="184" width="338" height="196" rx="24" fill="#EAE1D1" stroke="#1B1B1B" stroke-width="8"/>
+  <rect x="500" y="226" width="176" height="110" rx="18" fill="#D0C6B6"/>
+  <rect x="694" y="226" width="64" height="18" rx="9" fill="#132A30"/>
+  <rect x="694" y="258" width="72" height="18" rx="9" fill="#2B5059"/>
+  <rect x="694" y="290" width="56" height="18" rx="9" fill="#A5523F"/>
+  <text x="500" y="350" fill="#132A30" font-family="Segoe UI, sans-serif" font-size="28" font-weight="700">Auto extraction</text>
+  <rect x="460" y="410" width="338" height="218" rx="24" fill="#EAE1D1" stroke="#1B1B1B" stroke-width="8"/>
+  <rect x="500" y="454" width="222" height="20" rx="10" fill="#132A30"/>
+  <rect x="500" y="492" width="182" height="20" rx="10" fill="#2B5059"/>
+  <rect x="500" y="530" width="196" height="20" rx="10" fill="#A5523F"/>
+  <text x="500" y="590" fill="#132A30" font-family="Segoe UI, sans-serif" font-size="28" font-weight="700">CSV, JSON and HTML report</text>
+  <rect x="838" y="184" width="318" height="444" rx="24" fill="#132A30"/>
+  <rect x="882" y="232" width="230" height="138" rx="20" fill="#F8F2E8"/>
+  <rect x="908" y="258" width="178" height="86" rx="18" fill="#D9D1C5"/>
+  <rect x="882" y="406" width="230" height="178" rx="20" fill="#F8F2E8"/>
+  <rect x="920" y="444" width="156" height="22" rx="11" fill="#132A30"/>
+  <rect x="920" y="482" width="142" height="22" rx="11" fill="#2B5059"/>
+  <rect x="920" y="520" width="170" height="22" rx="11" fill="#A5523F"/>
+  <text x="898" y="606" fill="#F8F2E8" font-family="Segoe UI, sans-serif" font-size="28" font-weight="800">Privacy-safe exports</text>
+</svg>
