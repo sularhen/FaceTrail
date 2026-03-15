@@ -36,12 +36,16 @@ class FaceTrailAnalyzer:
         min_face_size: int = 64,
         cluster_threshold: float = 0.92,
         save_redacted: bool = False,
+        save_crops: bool = True,
+        save_report: bool = True,
     ) -> None:
         self.output_dir = output_dir
         self.sample_every = max(1, sample_every)
         self.min_face_size = min_face_size
         self.cluster_threshold = cluster_threshold
         self.save_redacted = save_redacted
+        self.save_crops = save_crops
+        self.save_report = save_report
         self.crops_dir = output_dir / "faces"
         self.redacted_dir = output_dir / "redacted"
         self.report_dir = output_dir / "report"
@@ -50,8 +54,10 @@ class FaceTrailAnalyzer:
 
     def _ensure_dirs(self) -> None:
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        self.crops_dir.mkdir(parents=True, exist_ok=True)
-        self.report_dir.mkdir(parents=True, exist_ok=True)
+        if self.save_crops:
+            self.crops_dir.mkdir(parents=True, exist_ok=True)
+        if self.save_report:
+            self.report_dir.mkdir(parents=True, exist_ok=True)
         if self.save_redacted:
             self.redacted_dir.mkdir(parents=True, exist_ok=True)
 
@@ -102,7 +108,8 @@ class FaceTrailAnalyzer:
 
         self._cluster_detections(detections, embeddings)
         summary = self._build_summary(detections, media_stats, images, videos)
-        self._write_outputs(summary, detections)
+        if self.save_report:
+            self._write_outputs(summary, detections)
         return summary
 
     def _process_image(self, image_path: Path) -> tuple[list[Detection], list[np.ndarray]]:
@@ -198,9 +205,12 @@ class FaceTrailAnalyzer:
             embedding = self._create_embedding(crop)
             sharpness = self._sharpness_score(crop)
             confidence = min(0.99, 0.55 + min(0.4, sharpness / 1000.0))
-            crop_name = f"{base_name}_f{frame_index:06d}_face{box_index:02d}.jpg"
-            crop_path = self.crops_dir / crop_name
-            cv2.imwrite(str(crop_path), crop)
+            crop_path = ""
+            if self.save_crops:
+                crop_name = f"{base_name}_f{frame_index:06d}_face{box_index:02d}.jpg"
+                crop_file = self.crops_dir / crop_name
+                cv2.imwrite(str(crop_file), crop)
+                crop_path = str(crop_file)
 
             detections.append(
                 Detection(
@@ -211,7 +221,7 @@ class FaceTrailAnalyzer:
                     bbox=(x, y, w, h),
                     sharpness=sharpness,
                     confidence=confidence,
-                    crop_path=str(crop_path),
+                    crop_path=crop_path,
                 )
             )
             embeddings.append(embedding)
@@ -369,11 +379,14 @@ class FaceTrailAnalyzer:
         cards = []
         for person in summary["people"]:
             sources = "<br>".join(person["sources"][:3]) or "No sources"
-            best_face = Path(person["best_face"]).resolve().as_uri()
+            best_face = ""
+            if person["best_face"]:
+                best_face = Path(person["best_face"]).resolve().as_uri()
+            image_markup = f'<img src="{best_face}" alt="Cluster {person["cluster_id"]}">' if best_face else '<div class="placeholder">No face crop saved for this mode</div>'
             cards.append(
                 f"""
                 <article class="card">
-                  <img src="{best_face}" alt="Cluster {person['cluster_id']}">
+                  {image_markup}
                   <div class="meta">
                     <h3>Cluster {person['cluster_id']}</h3>
                     <p>{person['detections']} detections</p>
@@ -382,6 +395,11 @@ class FaceTrailAnalyzer:
                   </div>
                 </article>
                 """
+            )
+        media_rows = []
+        for source_path, data in summary["media"].items():
+            media_rows.append(
+                f"<tr><td>{source_path}</td><td>{data['frames']}</td><td>{data['faces']}</td></tr>"
             )
         return f"""<!DOCTYPE html>
 <html lang="en">
@@ -397,6 +415,7 @@ class FaceTrailAnalyzer:
       --ink: #1d2a33;
       --accent: #0d7c66;
       --border: #d9cfbf;
+      --muted: #52616c;
     }}
     body {{
       margin: 0;
@@ -410,11 +429,15 @@ class FaceTrailAnalyzer:
       padding: 32px 20px 48px;
     }}
     .hero {{
-      background: linear-gradient(135deg, #0d7c66, #143d52);
+      background: linear-gradient(135deg, #143d52, #0d7c66);
       color: white;
       padding: 24px;
       border-radius: 22px;
       box-shadow: 0 20px 60px rgba(20, 61, 82, 0.18);
+    }}
+    .hero p {{
+      max-width: 700px;
+      color: #e6f0f5;
     }}
     .stats {{
       display: grid;
@@ -428,6 +451,18 @@ class FaceTrailAnalyzer:
       border-radius: 18px;
       padding: 16px;
     }}
+    .panels {{
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }}
+    .panel {{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }}
     .grid {{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -440,8 +475,48 @@ class FaceTrailAnalyzer:
       border-radius: 14px;
       display: block;
     }}
+    .placeholder {{
+      height: 220px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 16px;
+      background: linear-gradient(135deg, #ece4d7, #ddd1be);
+      color: var(--muted);
+      font-weight: 600;
+    }}
     h1, h2, h3, p {{
       margin-top: 0;
+    }}
+    table {{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }}
+    td, th {{
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }}
+    .muted {{
+      color: var(--muted);
+    }}
+    .pill {{
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e4f4ef;
+      color: #0d7c66;
+      font-size: 0.85rem;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }}
+    @media (max-width: 860px) {{
+      .panels {{
+        grid-template-columns: 1fr;
+      }}
     }}
   </style>
 </head>
@@ -449,13 +524,33 @@ class FaceTrailAnalyzer:
   <main>
     <section class="hero">
       <h1>FaceTrail Report</h1>
-      <p>Detected {summary['faces_detected']} faces and grouped them into {summary['people_clustered']} clusters.</p>
+      <p>Detected {summary['faces_detected']} faces and grouped them into {summary['people_clustered']} clusters. This report is designed for quick review, privacy checks, and local media curation.</p>
     </section>
     <section class="stats">
       <div class="stat"><h3>Images</h3><p>{summary['input_images']}</p></div>
       <div class="stat"><h3>Videos</h3><p>{summary['input_videos']}</p></div>
       <div class="stat"><h3>Faces</h3><p>{summary['faces_detected']}</p></div>
       <div class="stat"><h3>Clusters</h3><p>{summary['people_clustered']}</p></div>
+    </section>
+    <section class="panels">
+      <div class="panel">
+        <h2>How to read this</h2>
+        <p class="muted">Each cluster groups visually similar face crops. Use the best face card below as a quick starting point, then cross-check the source list before sharing or deleting anything.</p>
+        <span class="pill">Automatic crops</span>
+        <span class="pill">Blur-ready exports</span>
+        <span class="pill">CSV and JSON included</span>
+      </div>
+      <div class="panel">
+        <h2>Source Summary</h2>
+        <table>
+          <thead>
+            <tr><th>Source</th><th>Frames</th><th>Faces</th></tr>
+          </thead>
+          <tbody>
+            {''.join(media_rows)}
+          </tbody>
+        </table>
+      </div>
     </section>
     <section>
       <h2>Best Face Per Cluster</h2>
