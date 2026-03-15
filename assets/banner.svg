@@ -1,27 +1,26 @@
 <svg width="1280" height="640" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1280" height="640" fill="#F4EFE6"/>
-  <circle cx="1046" cy="112" r="170" fill="#E6F2EC"/>
-  <circle cx="118" cy="540" r="164" fill="#E7E0D3"/>
-  <rect x="68" y="86" width="1144" height="468" rx="36" fill="url(#paint0_linear)"/>
-  <rect x="112" y="140" width="434" height="360" rx="24" fill="#FFF8EF"/>
-  <rect x="576" y="140" width="592" height="164" rx="24" fill="#FFF8EF" fill-opacity="0.92"/>
-  <rect x="576" y="326" width="282" height="174" rx="24" fill="#FFF8EF" fill-opacity="0.92"/>
-  <rect x="886" y="326" width="282" height="174" rx="24" fill="#FFF8EF" fill-opacity="0.92"/>
-  <rect x="160" y="190" width="166" height="212" rx="24" fill="#0D7C66"/>
-  <rect x="348" y="190" width="150" height="98" rx="20" fill="#D7ECE5"/>
-  <rect x="348" y="304" width="150" height="98" rx="20" fill="#143D52"/>
-  <path d="M684 210H1084" stroke="#143D52" stroke-width="18" stroke-linecap="round"/>
-  <path d="M684 254H1014" stroke="#5A6B75" stroke-width="14" stroke-linecap="round"/>
-  <path d="M684 372H794" stroke="#0D7C66" stroke-width="16" stroke-linecap="round"/>
-  <path d="M684 412H770" stroke="#5A6B75" stroke-width="12" stroke-linecap="round"/>
-  <path d="M992 372H1102" stroke="#0D7C66" stroke-width="16" stroke-linecap="round"/>
-  <path d="M992 412H1078" stroke="#5A6B75" stroke-width="12" stroke-linecap="round"/>
-  <text x="120" y="104" fill="#FFF8EF" font-family="Segoe UI, sans-serif" font-size="34" font-weight="600">FaceTrail</text>
-  <text x="120" y="542" fill="#143D52" font-family="Segoe UI, sans-serif" font-size="52" font-weight="700">Face extraction, clustering and privacy-safe media copies</text>
+  <rect width="1280" height="640" fill="#EEE5D6"/>
+  <rect x="56" y="56" width="1168" height="528" rx="40" fill="url(#bg)"/>
+  <circle cx="640" cy="234" r="126" fill="#F8F2E8" stroke="#111111" stroke-width="18"/>
+  <circle cx="592" cy="218" r="28" fill="#111111"/>
+  <circle cx="688" cy="218" r="28" fill="#111111"/>
+  <path d="M639 244L611 289H667L639 244Z" fill="#111111"/>
+  <rect x="568" y="324" width="144" height="90" rx="22" fill="#F8F2E8" stroke="#111111" stroke-width="18"/>
+  <path d="M604 324V414" stroke="#111111" stroke-width="14"/>
+  <path d="M640 324V414" stroke="#111111" stroke-width="14"/>
+  <path d="M676 324V414" stroke="#111111" stroke-width="14"/>
+  <path d="M507 204C482 232 471 265 471 302" stroke="#111111" stroke-width="18" stroke-linecap="round"/>
+  <path d="M773 204C798 232 809 265 809 302" stroke="#111111" stroke-width="18" stroke-linecap="round"/>
+  <path d="M531 360C503 392 487 429 482 472" stroke="#111111" stroke-width="18" stroke-linecap="round"/>
+  <path d="M749 360C777 392 793 429 798 472" stroke="#111111" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="402" cy="196" r="18" fill="#D65345"/>
+  <circle cx="878" cy="384" r="14" fill="#D65345"/>
+  <text x="640" y="518" text-anchor="middle" fill="#F8F2E8" font-family="Segoe UI, sans-serif" font-size="92" font-weight="800">FaceTrail</text>
+  <text x="640" y="564" text-anchor="middle" fill="#D7D1C8" font-family="Segoe UI, sans-serif" font-size="28" font-weight="500">Face extraction, clustering and privacy-safe exports</text>
   <defs>
-    <linearGradient id="paint0_linear" x1="68" y1="86" x2="1212" y2="554" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#143D52"/>
-      <stop offset="1" stop-color="#0D7C66"/>
+    <linearGradient id="bg" x1="104" y1="74" x2="1176" y2="568" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18333A"/>
+      <stop offset="1" stop-color="#0E1B20"/>
     </linearGradient>
   </defs>
 </svg>

@@ -2,7 +2,7 @@
 
 ![FaceTrail banner](assets/banner.svg)
 
-FaceTrail turns a folder of images or videos into a practical face-review workspace. It detects faces, extracts clean crops, groups similar appearances, and can export privacy-safe media copies with blurred faces. The project started from the original `PythonFaceTracker` scripts and has been rebuilt into a cross-platform CLI that is easier to install and actually useful day to day on Windows and Linux.
+FaceTrail is a cross-platform CLI for face extraction, clustering, visual reports, and privacy-safe media exports. It turns a folder of images or videos into a practical review workspace, and it was rebuilt from the original `PythonFaceTracker` idea into something cleaner, easier to install, and actually ready to share.
 
 ## Why this is useful
 
@@ -36,6 +36,19 @@ Windows PowerShell:
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -e .
+```
+
+## Release Packages
+
+This repository now includes a release packer that always generates:
+
+- `dist/facetrail-windows-vX.Y.Z.zip`
+- `dist/facetrail-linux-vX.Y.Z.tar.gz`
+
+Build them with:
+
+```bash
+python scripts/build_release.py
 ```
 
 ## Quick start

@@ -7,3 +7,4 @@
 - Added face crop extraction, clustering, sharpness ranking, and reporting.
 - Added privacy-safe redacted exports for images and videos.
 - Replaced the old README with bilingual documentation and a project banner.
+- Added release packaging for Windows `.zip` and Linux `.tar.gz`.

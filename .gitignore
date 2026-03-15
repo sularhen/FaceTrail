@@ -2,7 +2,7 @@
 __pycache__/
 *.pyc
 build/
-dist/
+dist/staging/
 *.egg-info/
 .pytest_cache/
 output/

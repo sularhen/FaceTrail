@@ -2,7 +2,7 @@
 
 ![FaceTrail banner](assets/banner.svg)
 
-FaceTrail convierte una carpeta de imagenes o videos en un espacio de trabajo util para revisar rostros detectados, agrupar capturas similares y generar copias anonimizadas listas para compartir. Nacio a partir del proyecto original de seguimiento facial, pero ahora funciona como una herramienta CLI pensada para uso real en Windows y Linux.
+FaceTrail es una CLI multiplataforma para extraer rostros, agrupar apariciones similares, generar reportes visuales y exportar copias anonimizadas. Convierte una carpeta de imagenes o videos en un espacio de trabajo realmente util, y nace de la idea original de `PythonFaceTracker` pero rehecha para quedar mas limpia, portable y compartible.
 
 ## Que hace
 
@@ -27,6 +27,19 @@ En Windows PowerShell:
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -e .
+```
+
+## Paquetes de Release
+
+El repositorio ahora incluye un generador de paquetes que deja siempre:
+
+- `dist/facetrail-windows-vX.Y.Z.zip`
+- `dist/facetrail-linux-vX.Y.Z.tar.gz`
+
+Se genera con:
+
+```bash
+python scripts/build_release.py
 ```
 
 ## Uso rapido
