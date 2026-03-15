@@ -1,10 +1,6 @@
 # FaceTrail
 
-![FaceTrail banner](assets/banner.svg)
-
 FaceTrail is a cross-platform CLI for face extraction, clustering, visual reports, and privacy-safe media exports. It turns a folder of images or videos into a practical review workspace, and it was rebuilt from the original `PythonFaceTracker` idea into something cleaner, easier to install, and actually ready to share.
-
-![FaceTrail preview](assets/preview.svg)
 
 ## Why this is useful
 
@@ -102,11 +98,7 @@ Recommended defaults:
 
 # FaceTrail en Espanol
 
-![FaceTrail banner](assets/banner.svg)
-
 FaceTrail es una CLI multiplataforma para extraer rostros, agrupar apariciones similares, generar reportes visuales y exportar copias anonimizadas. Convierte una carpeta de imagenes o videos en un espacio de trabajo realmente util, y nace de la idea original de `PythonFaceTracker` pero rehecha para quedar mas limpia, portable y compartible.
-
-![Vista de FaceTrail](assets/preview.svg)
 
 ## Que hace
 
