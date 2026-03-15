@@ -1,0 +1,21 @@
+<svg width="1280" height="360" viewBox="0 0 1280 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="360" fill="#F3EBDC"/>
+  <rect x="36" y="36" width="1208" height="288" rx="28" fill="url(#bg)"/>
+  <circle cx="198" cy="180" r="72" fill="#FFF7EA" stroke="#131313" stroke-width="12"/>
+  <circle cx="171" cy="168" r="15" fill="#131313"/>
+  <circle cx="225" cy="168" r="15" fill="#131313"/>
+  <path d="M198 186L183 210H213L198 186Z" fill="#131313"/>
+  <rect x="158" y="231" width="80" height="46" rx="12" fill="#FFF7EA" stroke="#131313" stroke-width="12"/>
+  <path d="M178 231V277" stroke="#131313" stroke-width="8"/>
+  <path d="M198 231V277" stroke="#131313" stroke-width="8"/>
+  <path d="M218 231V277" stroke="#131313" stroke-width="8"/>
+  <text x="330" y="166" fill="#FFF7EA" font-family="Segoe UI, sans-serif" font-size="68" font-weight="800">FaceTrail</text>
+  <text x="332" y="214" fill="#D8D1C6" font-family="Segoe UI, sans-serif" font-size="28" font-weight="500">Face extraction, clustering and privacy-safe exports</text>
+  <text x="332" y="258" fill="#D8D1C6" font-family="Segoe UI, sans-serif" font-size="24" font-weight="500">Windows and Linux ready</text>
+  <defs>
+    <linearGradient id="bg" x1="36" y1="36" x2="1244" y2="324" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#18323B"/>
+      <stop offset="1" stop-color="#0E1A1F"/>
+    </linearGradient>
+  </defs>
+</svg>
