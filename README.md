@@ -1,5 +1,7 @@
 # FaceTrail
 
+![FaceTrail banner](assets/banner.svg)
+
 FaceTrail is a cross-platform CLI for face extraction, clustering, visual reports, and privacy-safe media exports. It turns a folder of images or videos into a practical review workspace, and it was rebuilt from the original `PythonFaceTracker` idea into something cleaner, easier to install, and actually ready to share.
 
 ## Why this is useful
