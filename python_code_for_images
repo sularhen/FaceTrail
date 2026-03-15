@@ -1,102 +1,10 @@
-import cv2
-import numpy as np
-import os
+from pathlib import Path
+import sys
 
-# Crear carpeta para guardar los rostros, si no existe
-if not os.path.exists('Rostros encontrados'):
-    print('Carpeta creada: Rostros encontrados')
-    os.makedirs('Rostros encontrados')
+sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
-# Ruta de la carpeta que contiene las imágenes
-image_folder = "tu ruta o nombre de la carpeta que contiene las imagenes"  # Cambia por la ruta de tus imágenes
+from facetrail.cli import main
 
-# Ruta del modelo ArcFace (archivo .onnx)
-onnx_model_path = "arcfaceresnet100-8.onnx"  # El archivo ONNX que descargaste
 
-# Verifica si el archivo del modelo existe
-if not os.path.exists(onnx_model_path):
-    raise FileNotFoundError("No se encuentra el archivo del modelo ONNX.")
-
-# Cargar el modelo ArcFace
-net = cv2.dnn.readNetFromONNX(onnx_model_path)
-
-# Ruta correcta para las cascadas Haar de OpenCV
-haarcascade_frontface_path = r"C:\tour_haarcascaderoute.xml"
-haarcascade_profileface_path = r"C:\tour_haarcascaderoute.xml"
-
-# Verifica si los archivos Haar Cascade existen
-if not os.path.exists(haarcascade_frontface_path):
-    raise FileNotFoundError(f"El archivo Haar Cascade frontal no se encuentra en: {haarcascade_frontface_path}")
-if not os.path.exists(haarcascade_profileface_path):
-    raise FileNotFoundError(f"El archivo Haar Cascade de perfil no se encuentra en: {haarcascade_profileface_path}")
-
-# Cargar los clasificadores Haar para detectar rostros
-face_cascade_front = cv2.CascadeClassifier(haarcascade_frontface_path)
-face_cascade_profile = cv2.CascadeClassifier(haarcascade_profileface_path)
-
-# Inicializar lista para almacenar los embeddings
-embeddings = []
-face_count = 0
-
-# Procesar cada imagen en la carpeta
-for image_name in os.listdir(image_folder):
-    image_path = os.path.join(image_folder, image_name)
-
-    # Leer la imagen
-    frame = cv2.imread(image_path)
-    if frame is None:
-        print(f"No se pudo leer la imagen: {image_path}")
-        continue
-
-    # Convertir la imagen a escala de grises para la detección de rostros
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-    # Detectar rostros frontales
-    faces_front = face_cascade_front.detectMultiScale(gray, 1.1, 4)
-    # Detectar rostros de perfil
-    faces_profile = face_cascade_profile.detectMultiScale(gray, 1.1, 4)
-
-    # Convertir las detecciones de cada tipo a una lista (debe ser lista de tuplas)
-    faces_front = [tuple(face) for face in faces_front]
-    faces_profile = [tuple(face) for face in faces_profile]
-
-    # Unificar las detecciones de rostros frontales y de perfil
-    faces = faces_front + faces_profile  # Concatenar ambas listas
-
-    # Para cada rostro detectado, obtener el embedding usando ArcFace
-    for (x, y, w, h) in faces:
-        face = frame[y:y+h, x:x+w]
-        
-        # Preprocesar la imagen del rostro para el modelo ArcFace
-        blob = cv2.dnn.blobFromImage(face, 1.0, (112, 112), (127.5, 127.5, 127.5), swapRB=True, crop=True)
-        net.setInput(blob)
-        detections = net.forward()
-
-        # Imprimir las dimensiones de las detecciones para verificar la estructura
-        print(f"Dimensiones de detections: {detections.shape}")
-
-        # Extraer el embedding del rostro
-        embedding = detections.flatten()  # Convertir el vector 2D en 1D
-        embeddings.append(embedding)
-
-        # Mostrar el cuadro alrededor del rostro
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (128, 0, 255), 2)
-
-        # Recortar el rostro detectado y guardarlo
-        cropped_face = frame[y:y+h, x:x+w]
-        cv2.imwrite(f'Rostros encontrados/rostro_{face_count}_cropped.jpg', cropped_face)
-        
-        # Crear la versión con zoom del rostro (ampliado)
-        zoomed_face = cv2.resize(cropped_face, (200, 200), interpolation=cv2.INTER_CUBIC)
-        cv2.imwrite(f'Rostros encontrados/rostro_{face_count}_zoomed.jpg', zoomed_face)
-
-        face_count += 1
-
-    # Mostrar la imagen con los rostros detectados
-    cv2.imshow('Imagen', frame)
-
-    # Presionar cualquier tecla para pasar a la siguiente imagen
-    cv2.waitKey(0)
-
-# Cerrar todas las ventanas de OpenCV
-cv2.destroyAllWindows()
+if __name__ == "__main__":
+    raise SystemExit(main(["scan", ".", "--output", "output_images"]))

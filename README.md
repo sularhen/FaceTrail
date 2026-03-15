@@ -1,44 +1,88 @@
-## Python Face Recognition
+# FaceTrail
 
-***Face recognition for images or videos using python and opencv libraries. the principal objetive with this code
-was to track faces in videos and save it as images when the target is the correct. I did it using python, Open
-CV libraries (haar classifiers) and ArcFace model for embeeding. you can use it for tracking faces in images too.***
+![FaceTrail banner](assets/banner.svg)
 
-## How to use it:
+FaceTrail turns a folder of images or videos into a practical face-review workspace. It detects faces, extracts clean crops, groups similar appearances, and can export privacy-safe media copies with blurred faces. The project started from the original `PythonFaceTracker` scripts and has been rebuilt into a cross-platform CLI that is easier to install and actually useful day to day on Windows and Linux.
 
- - Copy and paste the code in your favorite code editor.
- - Save to code in a folder of your preference.
- - Change the route of your video or image in the code.
- - Put your path direction of the haar cascades in the code.
- - Be aware that the video is in mp4 format or the images are in jpg or png format.
- - In case you want to track faces in images then create a folder with the images and add the path to the code.
- - Run te code.
- - A folder is going to be created automatically with the faces saved in it in case you want to track faces in video.
+## Why this is useful
 
-## TO RUN THIS CODE CORRECTLY YOU NEED TO HAVE:
+- Review who appears across a media folder without manually scrubbing files.
+- Keep the sharpest crop of each repeated face-like appearance.
+- Generate HTML and JSON reports for audits, curation, or small local datasets.
+- Produce redacted copies before sharing footage publicly.
 
-***1. have the ArcFace model (arcfaceresnet100-8.onnx) in the folder where you save the code:***
+## Features
 
- - Download the model from a trusted repository (such as ONNX Model Zoo or ArcFace resources).
- - Make sure to save the file in the same path as your script or set onnx_model_path to the correct location.
+- Works with single images, full folders, and videos.
+- Uses OpenCV bundled Haar cascades automatically.
+- Extracts face crops and scores sharpness.
+- Clusters similar detections into reusable groups.
+- Exports `gallery.html`, `summary.json`, and `detections.csv`.
+- Saves blurred privacy-safe image or video copies when requested.
 
-***2. Download the Haar Cascade Classifiers and remember their path as you must provide them in the code for it to work:***
+## Installation
 
- - These .xml files come with OpenCV and are located in the cv2/data directory of your Python environment. Be sure to check the paths in the variables:
+Linux and macOS:
 
-     haarcascade_frontalface_default.xml
-     haarcascade_profileface.xml
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
 
- - If you can't find them, you can download them from the official OpenCV repository, remember that you must provide the path to these cascades in the code for it to run correctly so remember the path address.
+Windows PowerShell:
 
-***3. Make sure that the video format is MP4 and that it is saved in the folder where you will save the code and the faces. and the images
-   are in jpg or png format.***
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -e .
+```
 
-***4. Have an env environment created in conda with your favorite code editor (optional).***
- 
-- If you want to configure VS Code with a conda environment, you can find the necessary documentation at: https://docs.anaconda.com/working-with-conda/ide- tutorials/vscode/
+## Quick start
 
+```bash
+facetrail scan ./media --output ./output --save-redacted
+```
 
-#### ***Feel free, to change this code and play with it.***
+Tune it for your library:
 
-Sularhen.
+```bash
+facetrail scan ./media --output ./output --sample-every 10 --min-face-size 96 --cluster-threshold 0.95 --save-redacted
+```
+
+## Output structure
+
+- `output/faces/`: extracted face crops.
+- `output/redacted/`: optional blurred image or video copies.
+- `output/report/gallery.html`: visual review gallery.
+- `output/report/summary.json`: machine-readable summary.
+- `output/report/detections.csv`: spreadsheet-friendly manifest.
+
+## Command reference
+
+```text
+facetrail scan INPUT [--output OUTPUT] [--sample-every N] [--min-face-size PX] [--cluster-threshold FLOAT] [--save-redacted]
+```
+
+Recommended defaults:
+
+- `--sample-every 5` for balanced speed on videos.
+- `--min-face-size 64` for everyday phone and webcam footage.
+- `--cluster-threshold 0.92` for conservative grouping.
+
+## Practical use cases
+
+- Privacy pass before sending event footage to clients or friends.
+- Media triage for creators, journalists, and researchers.
+- Local photo review to find repeated people quickly.
+- Lightweight preparation step before a more advanced vision pipeline.
+
+## Limitations
+
+- Clustering is appearance-based and lightweight. It is not a biometric identity system.
+- Haar cascades are fast and portable, but they are not state-of-the-art detectors.
+- Performance depends on lighting, face angle, and source quality.
+
+## Spanish README
+
+The Spanish version is available in [README.es.md](README.es.md).
