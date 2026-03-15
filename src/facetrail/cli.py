@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import argparse
+import webbrowser
 from pathlib import Path
 
 from facetrail import __version__
 from facetrail.core import FaceTrailAnalyzer
+from facetrail.gui import launch_gui
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -47,6 +49,18 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Write privacy-safe copies with all detected faces blurred.",
     )
+    scan_parser.add_argument(
+        "--open-report",
+        action="store_true",
+        help="Open the generated HTML report in your default browser when done.",
+    )
+
+    gui_parser = subparsers.add_parser("gui", help="Launch the local desktop interface.")
+    gui_parser.add_argument(
+        "--start-input",
+        default="",
+        help="Optional file or folder to prefill in the interface.",
+    )
     return parser
 
 
@@ -64,7 +78,14 @@ def main(argv: list[str] | None = None) -> int:
         )
         summary = analyzer.analyze(Path(args.input))
         print(f"FaceTrail finished. Faces: {summary['faces_detected']} | Clusters: {summary['people_clustered']}")
-        print(f"Report: {Path(args.output) / 'report' / 'gallery.html'}")
+        report_path = Path(args.output) / "report" / "gallery.html"
+        print(f"Report: {report_path}")
+        if args.open_report:
+            webbrowser.open(report_path.resolve().as_uri())
+        return 0
+
+    if args.command == "gui":
+        launch_gui(args.start_input)
         return 0
 
     parser.error("Unknown command")

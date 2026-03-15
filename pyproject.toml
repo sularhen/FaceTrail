@@ -20,6 +20,7 @@ keywords = ["opencv", "face-detection", "video", "privacy", "cli"]
 
 [project.scripts]
 facetrail = "facetrail.cli:main"
+facetrail-gui = "facetrail.gui:main"
 
 [tool.setuptools]
 package-dir = { "" = "src" }

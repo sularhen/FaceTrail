@@ -383,6 +383,11 @@ class FaceTrailAnalyzer:
                 </article>
                 """
             )
+        media_rows = []
+        for source_path, data in summary["media"].items():
+            media_rows.append(
+                f"<tr><td>{source_path}</td><td>{data['frames']}</td><td>{data['faces']}</td></tr>"
+            )
         return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -397,6 +402,7 @@ class FaceTrailAnalyzer:
       --ink: #1d2a33;
       --accent: #0d7c66;
       --border: #d9cfbf;
+      --muted: #52616c;
     }}
     body {{
       margin: 0;
@@ -410,11 +416,15 @@ class FaceTrailAnalyzer:
       padding: 32px 20px 48px;
     }}
     .hero {{
-      background: linear-gradient(135deg, #0d7c66, #143d52);
+      background: linear-gradient(135deg, #143d52, #0d7c66);
       color: white;
       padding: 24px;
       border-radius: 22px;
       box-shadow: 0 20px 60px rgba(20, 61, 82, 0.18);
+    }}
+    .hero p {{
+      max-width: 700px;
+      color: #e6f0f5;
     }}
     .stats {{
       display: grid;
@@ -427,6 +437,18 @@ class FaceTrailAnalyzer:
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 16px;
+    }}
+    .panels {{
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }}
+    .panel {{
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
     }}
     .grid {{
       display: grid;
@@ -443,19 +465,68 @@ class FaceTrailAnalyzer:
     h1, h2, h3, p {{
       margin-top: 0;
     }}
+    table {{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }}
+    td, th {{
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }}
+    .muted {{
+      color: var(--muted);
+    }}
+    .pill {{
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e4f4ef;
+      color: #0d7c66;
+      font-size: 0.85rem;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }}
+    @media (max-width: 860px) {{
+      .panels {{
+        grid-template-columns: 1fr;
+      }}
+    }}
   </style>
 </head>
 <body>
   <main>
     <section class="hero">
       <h1>FaceTrail Report</h1>
-      <p>Detected {summary['faces_detected']} faces and grouped them into {summary['people_clustered']} clusters.</p>
+      <p>Detected {summary['faces_detected']} faces and grouped them into {summary['people_clustered']} clusters. This report is designed for quick review, privacy checks, and local media curation.</p>
     </section>
     <section class="stats">
       <div class="stat"><h3>Images</h3><p>{summary['input_images']}</p></div>
       <div class="stat"><h3>Videos</h3><p>{summary['input_videos']}</p></div>
       <div class="stat"><h3>Faces</h3><p>{summary['faces_detected']}</p></div>
       <div class="stat"><h3>Clusters</h3><p>{summary['people_clustered']}</p></div>
+    </section>
+    <section class="panels">
+      <div class="panel">
+        <h2>How to read this</h2>
+        <p class="muted">Each cluster groups visually similar face crops. Use the best face card below as a quick starting point, then cross-check the source list before sharing or deleting anything.</p>
+        <span class="pill">Automatic crops</span>
+        <span class="pill">Blur-ready exports</span>
+        <span class="pill">CSV and JSON included</span>
+      </div>
+      <div class="panel">
+        <h2>Source Summary</h2>
+        <table>
+          <thead>
+            <tr><th>Source</th><th>Frames</th><th>Faces</th></tr>
+          </thead>
+          <tbody>
+            {''.join(media_rows)}
+          </tbody>
+        </table>
+      </div>
     </section>
     <section>
       <h2>Best Face Per Cluster</h2>
